@@ -11,6 +11,8 @@ import { FreeShippingProps } from '../../typings/free-shipping'
 const CSS_HANDLES = [
   'fs_globalFreeShippingContainer',
   'fs_informativeFreeShippingText',
+  'fs_informativeFreeShippingTextInner',
+  'fs_informativeFreeShippingTextSpace',
   'fs_freeShippingProgressBar',
   'fs_rangeFreeShippingContainer',
   'fs_initialRangeFreeShippingText',
@@ -26,13 +28,15 @@ const FreeShipping: StorefrontFunctionComponent<FreeShippingProps> = ({
 
   // Get subTotal of my cart that is equal to the sum of the prices of the items in the cart
   const {
-    orderForm: { totalizers },
+    orderForm: {value},
   } = useOrderForm()
-
+  // console.log(orderForm);
+  
+  
   const [missingForFreeShipping, setMissingForFreeShipping] = useState(0)
   const [percentageForFreeShipping, setPercentageForFreeShipping] = useState(1)
 
-  let subTotal = totalizers.length === 0  ? 0 : totalizers[0].value / 100
+  let subTotal = value / 100
 
   useEffect(() => {
     setMissingForFreeShipping(
@@ -45,36 +49,47 @@ const FreeShipping: StorefrontFunctionComponent<FreeShippingProps> = ({
     )
   }, [subTotal])
 
+  console.log(valueOfFreeShipping);
+  console.log(subTotal);
+  console.log(missingForFreeShipping);
+  console.log(percentageForFreeShipping);
+  
   return (
     <div>
       {show.freeShippingComponent && (
         <div className={`w-90 pa3 ${handles.fs_globalFreeShippingContainer}`}>
         {show.informativeFreeShippingText && (
-          <p
-            className={`t-body mw9 mw-100 ${handles.fs_informativeFreeShippingText}`}
-          >
-            {show.labelInitial &&
-              percentageForFreeShipping < 100 &&
-              infoLabel.labelInitial}
+          <p className={`t-body mw9 mw-100 ${handles.fs_informativeFreeShippingText}`}>
+            {show.labelInitial && (
+              <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
+                {show.labelInitial && percentageForFreeShipping < 100 && infoLabel.labelInitial}
+                <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
+              </span>
+            )}
             {show.subTotal && percentageForFreeShipping < 100 && (
               <FormattedCurrency value={subTotal} />
             )}
-            &nbsp;
-            {show.labelBetween &&
-              percentageForFreeShipping < 100 &&
-              infoLabel.labelBetween}
+            {show.labelBetween && (
+              <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
+                {show.labelBetween && percentageForFreeShipping < 100 && infoLabel.labelBetween}
+                <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
+              </span>
+            )}
             {show.missingForFreeShipping && percentageForFreeShipping < 100 && (
               <FormattedCurrency value={missingForFreeShipping} />
             )}
-            &nbsp;
-            {show.labelFinal &&
-              percentageForFreeShipping < 100 &&
-              infoLabel.labelFinal}
-            &nbsp;
-            {show.labelFreeShippingComplete &&
-              percentageForFreeShipping === 100 &&
-              infoLabel.labelFreeShippingComplete}
-            &nbsp;
+            {show.labelFinal && (
+              <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
+                <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
+                {show.labelFinal && percentageForFreeShipping < 100 && infoLabel.labelFinal}
+              </span>
+            )}
+            {show.labelFreeShippingComplete && (
+              <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
+                <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
+                {show.labelFreeShippingComplete && percentageForFreeShipping === 100 && infoLabel.labelFreeShippingComplete}
+              </span>
+            )}
           </p>
         )}
         {show.rangeFreeShipping && (
