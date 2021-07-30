@@ -17,6 +17,7 @@ const CSS_HANDLES = [
   'fs_rangeFreeShippingContainer',
   'fs_initialRangeFreeShippingText',
   'fs_endRangeFreeShippingText',
+  'fs_endRangeFreeShippingTextBold',
 ] as const
 
 const FreeShipping: StorefrontFunctionComponent<FreeShippingProps> = ({
@@ -28,11 +29,11 @@ const FreeShipping: StorefrontFunctionComponent<FreeShippingProps> = ({
 
   // Get subTotal of my cart that is equal to the sum of the prices of the items in the cart
   const {
-    orderForm: {value},
+    orderForm: { value },
   } = useOrderForm()
   // console.log(orderForm);
-  
-  
+
+
   const [missingForFreeShipping, setMissingForFreeShipping] = useState(0)
   const [percentageForFreeShipping, setPercentageForFreeShipping] = useState(1)
 
@@ -53,71 +54,71 @@ const FreeShipping: StorefrontFunctionComponent<FreeShippingProps> = ({
   console.log(subTotal);
   console.log(missingForFreeShipping);
   console.log(percentageForFreeShipping);
-  
+
   return (
     <div>
       {show.freeShippingComponent && (
         <div className={`w-90 pa3 ${handles.fs_globalFreeShippingContainer}`}>
-        {show.informativeFreeShippingText && (
-          <p className={`t-body mw9 mw-100 ${handles.fs_informativeFreeShippingText}`}>
-            {show.labelInitial && (
-              <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
-                {show.labelInitial && percentageForFreeShipping < 100 && infoLabel.labelInitial}
-                <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
-              </span>
-            )}
-            {show.subTotal && percentageForFreeShipping < 100 && (
-              <FormattedCurrency value={subTotal} />
-            )}
-            {show.labelBetween && (
-              <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
-                {show.labelBetween && percentageForFreeShipping < 100 && infoLabel.labelBetween}
-                <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
-              </span>
-            )}
-            {show.missingForFreeShipping && percentageForFreeShipping < 100 && (
-              <FormattedCurrency value={missingForFreeShipping} />
-            )}
-            {show.labelFinal && (
-              <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
-                <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
-                {show.labelFinal && percentageForFreeShipping < 100 && infoLabel.labelFinal}
-              </span>
-            )}
-            {show.labelFreeShippingComplete && (
-              <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
-                <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
-                {show.labelFreeShippingComplete && percentageForFreeShipping === 100 && infoLabel.labelFreeShippingComplete}
-              </span>
-            )}
-          </p>
-        )}
-        {show.rangeFreeShipping && (
-          <div
-            className={`flex flex-wrap items-center justify-between pa2 ${handles.fs_rangeFreeShippingContainer}`}
-          >
-            {show.percentageFreeShipping && (
-              <Progress
-                type="line"
-                percent={percentageForFreeShipping}
-                className={`mw-100 ${handles.fs_freeShippingProgressBar}`}
-              />
-            )}
-            <p
-              className={`t-body mw9 self-start ${handles.fs_initialRangeFreeShippingText}`}
-            >
-              {' '}
-              <FormattedCurrency value={0} />{' '}
+          {show.informativeFreeShippingText && (
+            <p className={`t-body mw9 mw-100 ${handles.fs_informativeFreeShippingText}`}>
+              {show.labelInitial && (
+                <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
+                  {show.labelInitial && percentageForFreeShipping < 100 && infoLabel.labelInitial}
+                  <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
+                </span>
+              )}
+              {show.missingForFreeShipping && percentageForFreeShipping < 100 && (
+                <FormattedCurrency value={missingForFreeShipping} />
+              )}
+              {show.subTotal && percentageForFreeShipping < 100 && (
+                <FormattedCurrency value={subTotal} />
+              )}
+              {show.labelBetween && (
+                <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
+                  {show.labelBetween && percentageForFreeShipping < 100 && infoLabel.labelBetween}
+                  <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
+                </span>
+              )}
+              {show.labelFinal && (
+                <span className={`${handles.fs_informativeFreeShippingTextInner} ${handles.fs_endRangeFreeShippingTextBold}`}>
+                  <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
+                  {show.labelFinal && percentageForFreeShipping < 100 && infoLabel.labelFinal}
+                </span>
+              )}
+              {show.labelFreeShippingComplete && (
+                <span className={`${handles.fs_informativeFreeShippingTextInner}`}>
+                  <i className={`${handles.fs_informativeFreeShippingTextSpace}`}>&nbsp;</i>
+                  {show.labelFreeShippingComplete && percentageForFreeShipping === 100 && infoLabel.labelFreeShippingComplete}
+                </span>
+              )}
             </p>
-            <p
-              className={`t-body mw9 self-end ${handles.fs_endRangeFreeShippingText}`}
+          )}
+          {show.rangeFreeShipping && (
+            <div
+              className={`flex flex-wrap items-center justify-between pa2 ${handles.fs_rangeFreeShippingContainer}`}
             >
-              {' '}
-              <FormattedCurrency value={valueOfFreeShipping} />{' '}
-            </p>
-          </div>
-        )}
-      </div>
+              {show.percentageFreeShipping && (
+                <Progress
+                  type="line"
+                  percent={percentageForFreeShipping}
+                  className={`mw-100 ${handles.fs_freeShippingProgressBar}`}
+                />
+              )}
+              <p
+                className={`t-body mw9 self-start ${handles.fs_initialRangeFreeShippingText}`}
+              >
+                {' '}
+                <FormattedCurrency value={0} />{' '}
+              </p>
+              <p
+                className={`t-body mw9 self-end ${handles.fs_endRangeFreeShippingText}`}
+              >
+                {' '}
+                <FormattedCurrency value={valueOfFreeShipping} />{' '}
+              </p>
+            </div>
+          )}
+        </div>
       )}
     </div>
   )
