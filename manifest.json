@@ -1,7 +1,7 @@
 {
   "vendor": "micco",
   "name": "free-shipping",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "title": "BlackSip store components custom",
   "defaultLocale": "es-CO",
   "description": "The BlackSip store components for that render apps can use",
